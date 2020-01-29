@@ -95,7 +95,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "3a2b65e46569219791c63d6dd8143317.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "143f72df2e26f34d5a5ce142d9667679.png");
 
 /***/ }),
 
@@ -108,7 +108,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "0c81494e17d4497ccea72923c7d28d2e.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "b5512aaafd78d6bc0b6208c7de389aa8.png");
 
 /***/ }),
 
@@ -121,7 +121,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "79480bab2e6bb6ea95e0dcfa378d6cf7.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "9eaafbe597390994088cc8e2b2835c3d.png");
 
 /***/ }),
 
@@ -134,7 +134,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "bdd3a2fd075d028ddf46b071b2625bcc.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "7309c4089a7497db446a86fac36e3004.png");
 
 /***/ }),
 
@@ -147,7 +147,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "082ed98aa9ab3e57f55a27a96f1f7dac.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "5d14a37bec74b49bfb62d857814088cc.png");
 
 /***/ }),
 
@@ -160,7 +160,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "ed8822e2b50e4fe383be9b456255d9c6.png");
+/* harmony default export */ __webpack_exports__["default"] = (__webpack_require__.p + "d173ede0c9d3b950142673c716c55280.png");
 
 /***/ }),
 
@@ -185,88 +185,94 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var technologies = [_images_html_png__WEBPACK_IMPORTED_MODULE_0__["default"], _images_jquery_png__WEBPACK_IMPORTED_MODULE_2__["default"], _images_javascript_png__WEBPACK_IMPORTED_MODULE_1__["default"], _images_modx_png__WEBPACK_IMPORTED_MODULE_3__["default"], _images_vue_png__WEBPACK_IMPORTED_MODULE_4__["default"], _images_webpack_png__WEBPACK_IMPORTED_MODULE_5__["default"]]; // var technologies = ['html5', 'jquery', 'javascript', 'modx', 'vue', 'webpack'];
-
 var canvas = document.querySelector('canvas');
 var c = canvas.getContext('2d');
 canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.height = innerHeight; // =============== COLOR PALETTE =============
+
+var autumnPalette = ['#F28705', '#D96704', '#A63F03', '#8C1C03', '#590202', '#3391A6', '#25594A', '#3FA663', '#2D7345', '#2D7345', '#F2CA50', '#D98E04'];
+var technologies = [_images_html_png__WEBPACK_IMPORTED_MODULE_0__["default"], _images_jquery_png__WEBPACK_IMPORTED_MODULE_2__["default"], _images_javascript_png__WEBPACK_IMPORTED_MODULE_1__["default"], _images_modx_png__WEBPACK_IMPORTED_MODULE_3__["default"], _images_vue_png__WEBPACK_IMPORTED_MODULE_4__["default"], _images_webpack_png__WEBPACK_IMPORTED_MODULE_5__["default"]]; // ===================== UTILITIES COLORS ===========================
+
+function intRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function randomColor(palette) {
+  return palette[Math.ceil(Math.random() * palette.length)];
+}
+
+var loaded = false;
 
 for (var i = 0; i < technologies.length; i++) {
   (function (j) {
     var imgObj = new Image();
     imgObj.src = technologies[i];
     imgObj.addEventListener('load', function () {
-      var coordinates = {
-        x: canvas.width / 6 * j,
-        y: canvas.height / 2 - 150
+      imgObj.classList.add("img".concat(j));
+      document.querySelector('.grid-img').appendChild(imgObj);
+      var getPosition = imgObj.getBoundingClientRect();
+      var topImg = getPosition.top;
+      var leftImg = getPosition.left;
+      console.log({
+        topImg: topImg,
+        leftImg: leftImg
+      });
+      var circles = [];
+
+      for (var i = 0; i < 25; i++) {
+        var radius = Math.random() * 3 + 1;
+        var color = randomColor(autumnPalette);
+        circles.push(new Circle(leftImg + imgObj.clientWidth / 2, topImg + imgObj.clientHeight / 2, radius, color));
+      }
+
+      var animate = function animate() {
+        requestAnimationFrame(animate);
+        c.fillStyle = 'rgba(255,255,255,0.09)';
+        c.fillRect(0, 0, canvas.width, canvas.height);
+        circles.forEach(function (circle) {
+          circle.update();
+        });
       };
-      c.drawImage(imgObj, coordinates.x, coordinates.y, 150, 150);
-      var imgPosition = {
-        x: imgObj.offsetLeft + imgObj.width / 2,
-        y: imgObj.offsetTop + imgObj.height / 2
-      };
+
+      animate();
     }, false);
   })(i);
 }
 
-function scalePreserveAspectRatio(imgW, imgH, maxW, maxH) {
-  return Math.min(maxW / imgW, maxH / imgH);
-} // // ===================== UTILITIES COLORS ===========================
-// function intRange(min, max) {
-//   return Math.floor(Math.random() * (max - min + 1) + min);
-// }
-// function randomColor(palette) {
-//   return palette[Math.ceil(Math.random() * palette.length)]
-// }
-// // =============== COLOR PALETTE
-// const autumnPalette = ['#F28705', '#D96704', '#A63F03', '#8C1C03', '#590202'];
-// function Circle(x, y, radius, color) {
-//   this.x = x;
-//   this.y = y;
-//   this.radius = radius;
-//   this.color = color;
-//   this.speed = 0.05;
-//   this.radians = Math.random() * Math.PI * 2;
-//   var distanceTo = intRange(70, 140);
-//   this.distanceToCenter = {
-//     x: distanceTo,
-//     get y() {
-//       return this.x
-//     }
-//   }
-// }
-// Circle.prototype.draw = function (lastPoint) {
-//   c.beginPath();
-//   c.lineWidth = this.radius;
-//   c.strokeStyle = this.color;
-//   c.moveTo(lastPoint.x, lastPoint.y);
-//   c.lineTo(this.x, this.y)
-//   c.stroke();
-//   c.closePath();
-// }
-// Circle.prototype.update = function () {
-//   const lastPoint = { x: this.x, y: this.y }
-//   this.radians += this.speed;
-//   this.x = window.innerWidth / 2 + Math.cos(this.radians) * this.distanceToCenter.x;
-//   this.y = window.innerHeight / 2 + Math.sin(this.radians) * this.distanceToCenter.y;
-//   this.draw(lastPoint);
-// }
-// let circles = []
-// for (let i = 0; i < 10; i++) {
-//   const radius = (Math.random() * 3) + 1;
-//   const color = randomColor(autumnPalette);
-//   circles.push(new Circle(canvas.width / 2, canvas.height / 2, radius, color));
-// }
-// function animate() {
-//   requestAnimationFrame(animate);
-//   c.fillStyle = 'rgba(255,255,255,0.08)';
-//   c.fillRect(0, 0, canvas.width, canvas.height);
-//   circles.forEach(circle => {
-//     circle.update();
-//   })
-// }
-// animate()
+function Circle(x, y, radius, color) {
+  this.radius = radius;
+  this.color = color;
+  this.speed = 0.01;
+  this.distanceFromCenter = intRange(50, 120);
+  this.x = x;
+  this.y = y;
+  this.radians = Math.random() * Math.PI * 2;
+  this.lastPoint = {
+    x: this.x,
+    y: this.y
+  };
+}
+
+Circle.prototype.draw = function (lastPoint) {
+  c.beginPath();
+  c.lineWidth = this.radius * 1.3;
+  c.strokeStyle = this.color;
+  c.moveTo(lastPoint.x, lastPoint.y);
+  c.lineTo(this.x, this.y);
+  c.stroke();
+  c.closePath();
+};
+
+Circle.prototype.update = function () {
+  var lastPoint = {
+    x: this.x,
+    y: this.y
+  };
+  this.radians += this.speed;
+  this.x = this.lastPoint.x + Math.cos(this.radians) * this.distanceFromCenter;
+  this.y = this.lastPoint.y + Math.sin(this.radians) * this.distanceFromCenter;
+  this.draw(lastPoint);
+};
 
 /***/ })
 

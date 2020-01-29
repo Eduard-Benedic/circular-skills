@@ -8,12 +8,44 @@
     body {
       margin: 0;
     }
+
+    .skills {
+      position: relative;
+    }
+
+    #images {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+
+    canvas {
+      position: absolute;
+      z-index: -1;
+    }
+
+    .grid-img {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 200px 120px;
+      max-width: 1500px;
+      padding: 120px 0;
+      margin: 0 auto;
+      justify-items: center;
+    }
   </style>
 </head>
 
 <body>
-  <canvas></canvas>
-  <canvas id="newcanvas" width=1200 height=1400></canvas>
+  <div class="skills">
+    <canvas></canvas>
+    <!-- <canvas id="images"></canvas> -->
+    <div class="grid-img">
+
+    </div>
+  </div>
+
 </body>
 
 </html>
