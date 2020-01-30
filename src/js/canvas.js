@@ -36,7 +36,6 @@ function randomColor(palette) {
   return palette[Math.ceil(Math.random() * palette.length)]
 }
 
-var loaded = false;
 for (var i = 0; i < technologies.length; i++) {
   (function (j) {
     var imgObj = new Image();
@@ -54,11 +53,12 @@ for (var i = 0; i < technologies.length; i++) {
       for (var i = 0; i < 25; i++) {
         const radius = (Math.random() * 3) + 1;
         const color = randomColor(autumnPalette);
-        circles.push(new Circle(leftImg + imgObj.clientWidth / 2, topImg + imgObj.clientHeight / 2, radius, color));
+        circles.push(new Circle(leftImg + imgObj.width / 2, topImg + imgObj.height / 2, radius, color));
       }
       var animate = function () {
         requestAnimationFrame(animate);
-        c.fillStyle = 'rgba(255,255,255,0.09)';
+        c.fillStyle = 'rgb(255,255,255,0.06)';
+
         c.fillRect(0, 0, canvas.width, canvas.height);
 
         circles.forEach(circle => {
